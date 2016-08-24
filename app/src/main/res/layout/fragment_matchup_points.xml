@@ -1,0 +1,245 @@
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="net.jesspetersen.wvwtoolbox.MatchupPoints">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GO SERVER!!"
+        android:focusableInTouchMode="false"
+        android:textSize="30dp"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:id="@+id/myServer"
+        android:textColor="#000003" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/redborder"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RED TEAM"
+            android:id="@+id/redTeamName"
+            android:textColor="#ff0000"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SCORE: "
+                android:id="@+id/redTeamScore"
+                android:textColor="#ff0000"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:textAlignment="center"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="KILLS: "
+                android:id="@+id/redTeamKills"
+                android:textColor="#ff0000"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:textAlignment="center"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DEATHS: "
+                android:id="@+id/redTeamDeaths"
+                android:textColor="#ff0000"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:textAlignment="center"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blueborder"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BLUE TEAM"
+                android:id="@+id/blueTeamName"
+                android:textColor="#0004ff"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:textAlignment="center"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SCORE: "
+                        android:id="@+id/blueTeamScore"
+                        android:textColor="#0004ff"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="KILLS: "
+                        android:id="@+id/blueTeamKills"
+                        android:textColor="#0004ff"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="DEATHS: "
+                        android:id="@+id/blueTeamDeaths"
+                        android:textColor="#0004ff"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"/>
+                </RelativeLayout>
+            </LinearLayout>
+    </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/greenborder"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GREEN TEAM"
+            android:id="@+id/greenTeamName"
+            android:textColor="#17c600"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SCORE: "
+                    android:id="@+id/greenTeamScore"
+                    android:textColor="#17c600"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="KILLS: "
+                    android:id="@+id/greenTeamKills"
+                    android:textColor="#17c600"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="DEATHS: "
+                    android:id="@+id/greenTeamDeaths"
+                    android:textColor="#17c600"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/refreshBtn"
+        android:text="LOAD DATA"
+        android:background="#fcfdb7"
+        android:textColor="#7f7f7f"
+        android:clickable="true" />
+</LinearLayout>
+</ScrollView>
