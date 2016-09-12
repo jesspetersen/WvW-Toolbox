@@ -100,60 +100,120 @@ public class ResetTimer extends Fragment {
 
     public void LoadResetTimeNA()
     {
+        //Target time is Friday 02.00
         int days, hours, mins;
         DateTime now = new DateTime();
         DateTime nowUTC = now.withZone(DateTimeZone.forID("Etc/UTC"));
         int dayOfWeekNumber = nowUTC.getDayOfWeek();
         int hour = nowUTC.getHourOfDay();
         int min = nowUTC.getMinuteOfHour();
-        if (dayOfWeekNumber < 5)
-            days = 5 - dayOfWeekNumber;
-        else if (dayOfWeekNumber != 5)
-            days = 7;
-        else {
-            if (hour >= 2)
-                days = 8;
-            else
-                days = 0;
+        //Monday = 1; Tuesday = 2; Wednesday = 3; Thursday = 4; Friday = 5; Saturday = 6; Sunday = 7
+        switch (dayOfWeekNumber) {
+            case 1:
+                days = 4;
+                break;
+
+            case 2:
+                days = 3;
+                break;
+
+            case 3:
+                days = 2;
+                break;
+
+            case 4:
+                days = 1;
+                break;
+
+            case 5:
+                if (hour >= 2)
+                    days = 7;
+                else
+                    days = 0;
+                break;
+
+            case 6:
+                days = 6;
+                break;
+
+            case 7:
+                days = 5;
+                break;
+
+            default:
+                days = 100;
+                break;
         }
+
         if (hour <= 2)
             hours = 2 - hour;
         else
         {
-            hours = 25 - hour;
+            hours = 26 - hour;
             days = days - 1;
         }
-        mins = 59 - min;
+        mins = 60 - min;
+        if (min != 60)
+            hours = hours - 1;
         time.setText(days + "D " + hours + "H " + mins + "M");
     }
 
     public void LoadResetTimeEU()
     {
+        //Target time is Friday @ 18.00
         int days, hours, mins;
         DateTime now = new DateTime();
         DateTime nowUTC = now.withZone(DateTimeZone.forID("Etc/UTC"));
         int dayOfWeekNumber = nowUTC.getDayOfWeek();
         int hour = nowUTC.getHourOfDay();
         int min = nowUTC.getMinuteOfHour();
-        if (dayOfWeekNumber < 5)
-            days = 5 - dayOfWeekNumber;
-        else if (dayOfWeekNumber == 5)
-        {
-            if (hour >= 18)
-                days = 8;
-            else
-                days = 0;
+        switch (dayOfWeekNumber) {
+            case 1:
+                days = 4;
+                break;
+
+            case 2:
+                days = 3;
+                break;
+
+            case 3:
+                days = 2;
+                break;
+
+            case 4:
+                days = 1;
+                break;
+
+            case 5:
+                if (hour >= 18)
+                    days = 7;
+                else
+                    days = 0;
+                break;
+
+            case 6:
+                days = 6;
+                break;
+
+            case 7:
+                days = 5;
+                break;
+
+            default:
+                days = 100;
+                break;
         }
-        else
-            days = 7;
+
         if (hour <= 18)
             hours = 18 - hour;
         else
         {
-            hours = 24 - hour;
+            hours = 42 - hour;
             days = days - 1;
         }
-        mins = 59 - min;
+        mins = 60 - min;
+        if (min != 60)
+            hours = hours - 1;
         time.setText(days + "D " + hours + "H " + mins + "M");
     }
 }
