@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,44 +101,47 @@ public class ResetTimer extends Fragment {
 
     public void LoadResetTimeNA()
     {
-        //Target time is Friday 02.00
+        //Target time is Saturday 02.00
         int days, hours, mins;
         DateTime now = new DateTime();
         DateTime nowUTC = now.withZone(DateTimeZone.forID("Etc/UTC"));
         int dayOfWeekNumber = nowUTC.getDayOfWeek();
         int hour = nowUTC.getHourOfDay();
         int min = nowUTC.getMinuteOfHour();
+        Log.i("Hour", ""+hour);
+        Log.i("Min", ""+min);
+        Log.i("DoW", ""+dayOfWeekNumber);
         //Monday = 1; Tuesday = 2; Wednesday = 3; Thursday = 4; Friday = 5; Saturday = 6; Sunday = 7
         switch (dayOfWeekNumber) {
             case 1:
-                days = 4;
+                days = 5;
                 break;
 
             case 2:
-                days = 3;
+                days = 4;
                 break;
 
             case 3:
-                days = 2;
+                days = 3;
                 break;
 
             case 4:
-                days = 1;
+                days = 2;
                 break;
 
             case 5:
+                days = 1;
+                break;
+
+            case 6:
                 if (hour >= 2)
                     days = 7;
                 else
                     days = 0;
                 break;
 
-            case 6:
-                days = 6;
-                break;
-
             case 7:
-                days = 5;
+                days = 6;
                 break;
 
             default:
@@ -149,7 +153,7 @@ public class ResetTimer extends Fragment {
             hours = 2 - hour;
         else
         {
-            hours = 26 - hour;
+            hours = 25 - hour;
             days = days - 1;
         }
         mins = 60 - min;
@@ -208,7 +212,7 @@ public class ResetTimer extends Fragment {
             hours = 18 - hour;
         else
         {
-            hours = 42 - hour;
+            hours = 41 - hour;
             days = days - 1;
         }
         mins = 60 - min;
