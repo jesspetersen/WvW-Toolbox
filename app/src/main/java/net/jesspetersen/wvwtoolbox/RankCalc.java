@@ -125,7 +125,7 @@ public class RankCalc extends Fragment {
             currentRank = "Mithril";
         else
             currentRank = "Diamond";
-        if (rankInt == 1 && rankInt < 5 ^ rankInt >=150 && rankInt < 180 ^ rankInt >=620 && rankInt < 670 ^ rankInt >=1395 && rankInt < 1470 ^ rankInt >=2545 && rankInt < 2645 ^ rankInt >=4095 && rankInt < 4245 ^ rankInt >=6445 && rankInt < 6695)
+        if (rankInt >= 1 && rankInt < 5 ^ rankInt >=150 && rankInt < 180 ^ rankInt >=620 && rankInt < 670 ^ rankInt >=1395 && rankInt < 1470 ^ rankInt >=2545 && rankInt < 2645 ^ rankInt >=4095 && rankInt < 4245 ^ rankInt >=6445 && rankInt < 6695)
         {
             currentTitle.setText("You are currently a " +currentRank + " Invader.");
             if (currentRank == "")
