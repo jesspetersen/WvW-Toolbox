@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -28,7 +32,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Properties;
 
 
 public class MatchupPoints extends Fragment {
@@ -70,7 +76,7 @@ public class MatchupPoints extends Fragment {
 
         Context context = getActivity().getApplicationContext();
         worldList = new ArrayList<>();
-        SP = PreferenceManager.getDefaultSharedPreferences(context);
+        SP = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         serverID = SP.getString("userServer", "1");
         WorldNamesDownload wndTask = new WorldNamesDownload();
         wndTask.execute("https://api.guildwars2.com/v2/worlds?ids=all");

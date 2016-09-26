@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_settings:
                 //Toast.makeText(this, "ADD!", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(this, MyPreferencesActivity.class);
+                Intent i = new Intent(this, MyPreferences.class);
                 startActivity(i);
                 return true;
             case R.id.action_about:
