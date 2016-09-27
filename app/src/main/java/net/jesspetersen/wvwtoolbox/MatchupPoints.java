@@ -1,14 +1,21 @@
 package net.jesspetersen.wvwtoolbox;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
@@ -22,12 +29,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -40,12 +50,12 @@ import java.util.Properties;
 public class MatchupPoints extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    SharedPreferences SP;
     protected Activity mActivity;
     String matchJSON;
     List<World> worldList;
     Matchup thisMatch;
     String serverID;
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 123;
 
     //Visual Elements
     TextView myServ;
@@ -76,8 +86,7 @@ public class MatchupPoints extends Fragment {
 
         Context context = getActivity().getApplicationContext();
         worldList = new ArrayList<>();
-        SP = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        serverID = SP.getString("userServer", "1");
+        serverID = readDataFromFile();
         WorldNamesDownload wndTask = new WorldNamesDownload();
         wndTask.execute("https://api.guildwars2.com/v2/worlds?ids=all");
     }
@@ -104,11 +113,113 @@ public class MatchupPoints extends Fragment {
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Add runtime permission request for external storage
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        showMessageOKCancel("You need to allow access to External Storage",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                                MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+                                    }
+                                });
+                        return;
+                    }
+                    requestPermissions(new String[] {Manifest.permission.WRITE_CONTACTS},
+                            MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+                    return;
+                }
                 OnButtClick(v);
             }
         });
 
         return v;
+    }
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(getContext())
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    OnButtClick(getView());
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "You need to allow access to external storage to use this feature.", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
+    }
+
+    //Could not make separate class for this method as it requires an activity to function.
+    public String readDataFromFile() {
+        BufferedReader input = null;
+        File file = null;
+        String fileData = "1";
+        //Read from external storage if it is mounted
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != -1) {
+            try {
+                File folder = new File(Environment.getExternalStorageDirectory() + "/wvwtoolbox");
+                if (!folder.exists()) {
+                    Log.i("Testing", "Made it to folder not exists");
+                    boolean success = folder.mkdirs();
+                    if (success)
+                        Log.i("Testing", "Made folder true");
+                    else
+                        Log.i("Testing", "Made folder false");
+                }
+                file = new File(Environment.getExternalStorageDirectory()+"/wvwtoolbox", "dataForWvWToolbox.txt");
+                if(!file.exists()) {
+                    Log.i("Testing", "Made it to file not exists");
+                    file.createNewFile();
+                    Log.i("Testing", "Made file");
+                    OutputStream outStream = new FileOutputStream(file);
+                    outStream.write("1".getBytes());
+                    outStream.close();
+                }
+                input = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+                String line;
+                StringBuffer buffer = new StringBuffer();
+                while ((line = input.readLine()) != null) {
+                    buffer.append(line);
+                }
+
+                fileData = buffer.toString();
+            }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+            finally {
+                return fileData;
+            }
+        } else {
+            try {
+                file = new File(getActivity().getFilesDir(), "dataForWvWToolbox.txt");
+                input = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+                String line;
+                StringBuffer buffer = new StringBuffer();
+                while ((line = input.readLine()) != null) {
+                    buffer.append(line);
+                }
+
+                fileData = buffer.toString();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                return fileData;
+            }
+        }
     }
 
     public void populateServerName(){
@@ -126,7 +237,7 @@ public class MatchupPoints extends Fragment {
     }
 
     public void getMatchupData(){
-        serverID = SP.getString("userServer", "1");
+        serverID = readDataFromFile();
         if (serverID == "1")
             Toast.makeText(getActivity().getApplicationContext(), "Please go to settings by clicking the dots on the top right corner and select your server.", Toast.LENGTH_LONG).show();
         else {
